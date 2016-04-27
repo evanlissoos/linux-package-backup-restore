@@ -3,8 +3,8 @@ import subprocess
 import string
 import random
 
-#	Evan Lissoos
-#	4/22/16
+#Evan Lissoos
+#4/22/16
 
 #Future functionality:
 	#We could copy, save, then restore IP Tables
