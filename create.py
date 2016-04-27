@@ -3,6 +3,9 @@ import subprocess
 import string
 import random
 
+#	Evan Lissoos
+#	4/22/16
+
 #Future functionality:
 	#We could copy, save, then restore IP Tables
 	#http://linux.byexamples.com/archives/66/iptables-rules-can-be-easily-import-and-export/
@@ -85,9 +88,11 @@ else:
 #Add then commit everything to the SVN
 commit_message = '"Adding case ID' + UNIQUE_ID + '"'
 		
-command = subprocess.Popen("svn update", shell=True, stdout=subprocess.PIPE)
+command = subprocess.Popen("git update", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
-command = subprocess.Popen("svn add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
+command = subprocess.Popen("git add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
-command = subprocess.Popen("svn commit -m " + commit_message, shell=True, stdout=subprocess.PIPE)
+command = subprocess.Popen("git commit -m " + commit_message, shell=True, stdout=subprocess.PIPE)
+outHold = command.communicate()[0]
+command = subprocess.Popen("git push -u origin master", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
