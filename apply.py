@@ -2,8 +2,8 @@ import os
 import subprocess
 import string
 
-#	Evan Lissoos
-# 4/22/16
+#Evan Lissoos
+#4/22/16
 
 
 print "Welcome to snapshot applier"
