@@ -90,14 +90,20 @@ else:
 
 #Add then commit everything to the git repository
 commit_message = '"Adding case ID' + UNIQUE_ID + '"'
+
+os.system("git pull origin master")
+os.system("git add " + NEW_MANIFEST_NAME)
+os.system("git add .snap/ids.txt")
+os.system("git commit .snap/* -m " + commit_message)
+os.system("git push origin master")
 		
-command = subprocess.Popen("git pull origin master", shell=True, stdout=subprocess.PIPE)
-outHold = command.communicate()[0]
-command = subprocess.Popen("git add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
-outHold = command.communicate()[0]
-command = subprocess.Popen("git add .snap/ids.txt", shell=True, stdout=subprocess.PIPE)
-outHold = command.communicate()[0]
-command = subprocess.Popen("git commit .snap/* -m " + commit_message, shell=True, stdout=subprocess.PIPE)
-outHold = command.communicate()[0]
-command = subprocess.Popen("git push origin master", shell=True, stdout=subprocess.PIPE)
-outHold = command.communicate()[0]
+#command = subprocess.Popen("git pull origin master", shell=True, stdout=subprocess.PIPE)
+#outHold = command.communicate()[0]
+#command = subprocess.Popen("git add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
+#outHold = command.communicate()[0]
+#command = subprocess.Popen("git add .snap/ids.txt", shell=True, stdout=subprocess.PIPE)
+#outHold = command.communicate()[0]
+#command = subprocess.Popen("git commit .snap/* -m " + commit_message, shell=True, stdout=subprocess.PIPE)
+#outHold = command.communicate()[0]
+#command = subprocess.Popen("git push origin master", shell=True, stdout=subprocess.PIPE)
+#outHold = command.communicate()[0]
