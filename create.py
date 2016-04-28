@@ -12,6 +12,8 @@ import random
 
 	#We could also manage specific directories and files
 
+	#Multithread the Puppet installation by splitting up the manifest
+
 
 #Function to generate a random string of hex charachters as Unique ID
 def genUniqueID():
@@ -19,12 +21,12 @@ def genUniqueID():
 
 
 print "Welcome to snapshot creator"
-print "This program assumes that you already have Puppet and Subversion installed on your computer"
+print "This program assumes that you already have Puppet and Git installed on your computer"
 print "If not, please exit the program and install the packages"
 print ""
 
 
-#Get user choice if they want to maintain current package versions
+#Get user choice if they want to maintain current package versions, if not, packages will be up to date
 MAINTAIN_VERSIONS = 2
 while(MAINTAIN_VERSIONS == 2):
 	CHOICE = raw_input("For the package list to be kept, would you like to maintain the versions of packages already installed? (y/n) ")
@@ -92,7 +94,7 @@ command = subprocess.Popen("git pull", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
 command = subprocess.Popen("git add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
-command = subprocess.Popen("git commit -m " + commit_message, shell=True, stdout=subprocess.PIPE)
+command = subprocess.Popen("git commit * -m " + commit_message, shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
 command = subprocess.Popen("git push origin master", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
