@@ -87,7 +87,7 @@ else:
 
 	os.system("rm " + OLD_MANIFEST_NAME)
 
-#Add then commit everything to the SVN
+#Add then commit everything to the git repository
 commit_message = '"Adding case ID' + UNIQUE_ID + '"'
 		
 command = subprocess.Popen("git pull", shell=True, stdout=subprocess.PIPE)
