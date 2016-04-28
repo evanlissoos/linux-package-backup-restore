@@ -95,7 +95,7 @@ command = subprocess.Popen("git pull origin master", shell=True, stdout=subproce
 outHold = command.communicate()[0]
 command = subprocess.Popen("git add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
-command = subprocess.Popen("git add ids.txt", shell=True, stdout=subprocess.PIPE)
+command = subprocess.Popen("git add .snap/ids.txt", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
 command = subprocess.Popen("git commit .snap/* -m " + commit_message, shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
