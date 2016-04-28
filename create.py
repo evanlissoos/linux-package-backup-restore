@@ -62,6 +62,11 @@ while(not(UNIQUE_ID_FOUND)):
 ID_FILE.close()
 ID_FILE = open(".snap/ids.txt", "a")
 ID_FILE.write(UNIQUE_ID + "\n")
+
+#Git sequence for commiting ids.txt file changes
+os.system("git add .snap/ids.txt")
+os.system('git commit -m "Commiting ID file updates"')
+
 print "Your unique ID is " + UNIQUE_ID
 
 #If user does not want to maintain versions, we must modify the manifest to indicate so
