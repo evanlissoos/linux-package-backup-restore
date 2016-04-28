@@ -12,7 +12,7 @@ print "If not, please exit the program and install the packages"
 print ""
 
 #os.system("svn update")
-command = subprocess.Popen("git update", shell=True, stdout=subprocess.PIPE)
+command = subprocess.Popen("git pull", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
 
 UNIQUE_ID = raw_input("Please enter your unique ID exactly as it appeared when the snapshot was created: ")

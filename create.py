@@ -88,11 +88,11 @@ else:
 #Add then commit everything to the SVN
 commit_message = '"Adding case ID' + UNIQUE_ID + '"'
 		
-command = subprocess.Popen("git update", shell=True, stdout=subprocess.PIPE)
+command = subprocess.Popen("git pull", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
 command = subprocess.Popen("git add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
 command = subprocess.Popen("git commit -m " + commit_message, shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
-command = subprocess.Popen("git push -u origin master", shell=True, stdout=subprocess.PIPE)
+command = subprocess.Popen("git push origin master", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
