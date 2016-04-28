@@ -23,6 +23,7 @@ def genUniqueID():
 print "Welcome to snapshot creator"
 print "This program assumes that you already have Puppet and Git installed on your computer"
 print "If not, please exit the program and install the packages"
+print "This program will ask for your Git login info, this is so that your package lists can be saved and accessed by you from any computer associated with your repository"
 print ""
 
 
@@ -93,6 +94,8 @@ commit_message = '"Adding case ID' + UNIQUE_ID + '"'
 command = subprocess.Popen("git pull origin master", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
 command = subprocess.Popen("git add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
+outHold = command.communicate()[0]
+command = subprocess.Popen("git add ids.txt", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
 command = subprocess.Popen("git commit .snap/* -m " + commit_message, shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
