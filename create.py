@@ -93,7 +93,6 @@ commit_message = '"Adding case ID' + UNIQUE_ID + '"'
 
 os.system("git pull origin master")
 os.system("git add " + NEW_MANIFEST_NAME)
-os.system('git commit -am "Update ID file"')
 os.system("git commit .snap/* -m " + commit_message)
 os.system("git push origin master")
 		
