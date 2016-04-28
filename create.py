@@ -14,6 +14,8 @@ import random
 
 	#Multithread the Puppet installation by splitting up the manifest
 
+#Make sure everything is up to date
+os.system("git pull origin master")
 
 #Function to generate a random string of hex charachters as Unique ID
 def genUniqueID():
@@ -89,9 +91,8 @@ else:
 	os.system("rm " + OLD_MANIFEST_NAME)
 
 #Add then commit everything to the git repository
-commit_message = '"Adding case ID' + UNIQUE_ID + '"'
+commit_message = '"Adding case ID ' + UNIQUE_ID + '"'
 
-os.system("git pull origin master")
 os.system("git add " + NEW_MANIFEST_NAME)
 os.system("git commit .snap/* -m " + commit_message)
 os.system("git push origin master")
