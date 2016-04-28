@@ -65,7 +65,7 @@ ID_FILE.write(UNIQUE_ID + "\n")
 
 #Git sequence for commiting ids.txt file changes
 #os.system("git add .snap/ids.txt")
-os.system('git commit -am .snap "Commiting ID file updates"')
+os.system('git commit -am "Commiting ID file updates"')
 
 print "Your unique ID is " + UNIQUE_ID
 
