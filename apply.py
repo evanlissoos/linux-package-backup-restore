@@ -4,6 +4,7 @@ import string
 
 #Evan Lissoos
 #4/22/16
+#Git Version
 
 print "*****************"
 print "Welcome to snapshot applier"
