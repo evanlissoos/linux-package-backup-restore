@@ -5,11 +5,11 @@ import string
 #Evan Lissoos
 #4/22/16
 
-
+print "*****************"
 print "Welcome to snapshot applier"
 print "This program assumes that you already have Puppet and Git installed on your computer"
 print "If not, please exit the program and install the packages"
-print ""
+print "Also, please execute this program as root otherwise the execution will fail.\n"
 
 command = subprocess.Popen("git pull", shell=True, stdout=subprocess.PIPE)
 outHold = command.communicate()[0]
@@ -21,8 +21,10 @@ try:
 
 except IOError:
 	print "Error: invalid ID"
+	print "*****************"
 
 else:
+	print "*****************"
 	test_file.close()
 	command = subprocess.Popen("puppet apply " + ".snap/" + UNIQUE_ID + ".pp", shell=True, stdout=subprocess.PIPE)
 	outHold = command.communicate()[0]

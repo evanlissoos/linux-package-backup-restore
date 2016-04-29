@@ -21,12 +21,11 @@ os.system("git pull origin master")
 def genUniqueID():
    return ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
 
-
+print "*****************"
 print "Welcome to snapshot creator"
 print "This program assumes that you already have Puppet and Git installed on your computer"
 print "If not, please exit the program and install the packages"
-print "This program will ask for your Git login info, this is so that your package lists can be saved and accessed by you from any computer associated with your repository"
-print ""
+print "This program will ask for your Git login info, this is so that your package lists can be saved and accessed by you from any computer associated with your repository\n"
 
 
 #Get user choice if they want to maintain current package versions, if not, packages will be up to date
@@ -69,6 +68,7 @@ os.system("git update-index --no-assume-unchanged .snap/ids.txt")
 os.system('git commit -am "Commiting ID file updates"')
 
 print "Your unique ID is " + UNIQUE_ID
+print "*****************\n"
 
 #If user does not want to maintain versions, we must modify the manifest to indicate so
 if(MAINTAIN_VERSIONS):
@@ -102,14 +102,4 @@ commit_message = '"Adding case ID ' + UNIQUE_ID + '"'
 os.system("git add " + NEW_MANIFEST_NAME)
 os.system("git commit .snap/* -m " + commit_message)
 os.system("git push origin master")
-		
-#command = subprocess.Popen("git pull origin master", shell=True, stdout=subprocess.PIPE)
-#outHold = command.communicate()[0]
-#command = subprocess.Popen("git add " + NEW_MANIFEST_NAME, shell=True, stdout=subprocess.PIPE)
-#outHold = command.communicate()[0]
-#command = subprocess.Popen("git add .snap/ids.txt", shell=True, stdout=subprocess.PIPE)
-#outHold = command.communicate()[0]
-#command = subprocess.Popen("git commit .snap/* -m " + commit_message, shell=True, stdout=subprocess.PIPE)
-#outHold = command.communicate()[0]
-#command = subprocess.Popen("git push origin master", shell=True, stdout=subprocess.PIPE)
-#outHold = command.communicate()[0]
+#Still having some issues commiting the ids.txt file in the script
