@@ -9,9 +9,10 @@ import string
 os.system("clear")
 
 print "Welcome to snapshot applier"
+print "\nPLEASE EXECUTE THIS PROGRAM AS ROOT OR IT WILL FAIL\n"
 print "This program assumes that you already have Puppet and Git installed on your computer"
 print "If not, please exit the program and install the packages"
-print "Also, please execute this program as root otherwise the execution will fail.\n"
+
 CONTINUE = raw_input("Press enter to continue")
 
 os.system("git pull")
