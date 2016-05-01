@@ -22,7 +22,9 @@ os.system("git pull origin master")
 def genUniqueID():
    return ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
 
-print "*****************"
+os.system("clear")
+
+print "\n*****************************************\n"
 print "Welcome to snapshot creator"
 print "This program assumes that you already have Puppet and Git installed on your computer"
 print "If not, please exit the program and install the packages"
@@ -40,6 +42,7 @@ while(MAINTAIN_VERSIONS == 2):
 	else:
 		MAINTAIN_VERSIONS = 2
 
+print "\n*****************************************\n"
 
 #Generate Unique ID then check if ID already exists
 UNIQUE_ID = genUniqueID()
@@ -69,8 +72,11 @@ ID_FILE.close()
 os.system("git update-index --no-assume-unchanged .snap/ids.txt")
 os.system('git commit -am "Commiting ID file updates"')
 
+os.system("clear")
+
+print "\n*****************************************\n"
 print "Your unique ID is " + UNIQUE_ID
-print "*****************\n"
+print "\n*****************************************\n"
 
 #If user does not want to maintain versions, we must modify the manifest to indicate so
 if(MAINTAIN_VERSIONS):
@@ -104,4 +110,5 @@ commit_message = '"Adding case ID ' + UNIQUE_ID + '"'
 os.system("git add " + NEW_MANIFEST_NAME)
 os.system("git commit .snap/* -m " + commit_message)
 os.system("git push origin master")
+
 #Still having some issues commiting the ids.txt file in the script
