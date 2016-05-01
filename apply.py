@@ -28,5 +28,3 @@ except IOError:
 else:
 	test_file.close()
 	os.system("puppet apply " + ".snap/" + UNIQUE_ID + ".pp")
-	os.system("clear")
-	print "Great success\n"
