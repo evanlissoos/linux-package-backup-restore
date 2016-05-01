@@ -62,6 +62,7 @@ while(not(UNIQUE_ID_FOUND)):
 ID_FILE.close()
 ID_FILE = open(".snap/ids.txt", "a")
 ID_FILE.write(UNIQUE_ID + "\n")
+ID_FILE.close()
 
 #Git sequence for commiting ids.txt file changes
 #os.system("git add .snap/ids.txt")
