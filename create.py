@@ -2,10 +2,11 @@ import os
 import subprocess
 import string
 import random
+from pymongo import MongoClient
 
 #Evan Lissoos
-#4/22/16
-#Git version
+#6/19/16
+#Mongo version
 
 #Future functionality:
 	#We could copy, save, then restore IP Tables
@@ -15,8 +16,6 @@ import random
 
 	#Multithread the Puppet installation by splitting up the manifest
 
-#Make sure everything is up to date
-os.system("git pull origin master")
 
 #Function to generate a random string of hex charachters as Unique ID
 def genUniqueID():
@@ -24,15 +23,17 @@ def genUniqueID():
 
 print "*****************"
 print "Welcome to snapshot creator"
-print "This program assumes that you already have Puppet and Git installed on your computer"
+print "This program assumes that you already have Puppet installed on your computer"
 print "If not, please exit the program and install the packages"
-print "This program will ask for your Git login info, this is so that your package lists can be saved and accessed by you from any computer associated with your repository\n"
 
+
+client = MongoClient()
+db = client.linux_back
 
 #Get user choice if they want to maintain current package versions, if not, packages will be up to date
 MAINTAIN_VERSIONS = 2
 while(MAINTAIN_VERSIONS == 2):
-	CHOICE = raw_input("For the package list to be kept, would you like to maintain the versions of packages already installed? (y/n) ")
+	CHOICE = raw_input("For the package list to be kept, would you like to maintain the versions of packages currently installed? (y/n) ")
 	if(CHOICE == 'y' or CHOICE == 'Y'):
 		MAINTAIN_VERSIONS = 1
 	elif(CHOICE == 'n' or CHOICE == 'N'):
@@ -44,30 +45,20 @@ while(MAINTAIN_VERSIONS == 2):
 #Generate Unique ID then check if ID already exists
 UNIQUE_ID = genUniqueID()
 UNIQUE_ID_FOUND = 0
-ID_FILE = open(".snap/ids.txt", "r")
+cursor = db.ids.find()
+document = 0
+for doc in cursor:
+	document = doc
+IDS = document.get('ids')
 
-while(not(UNIQUE_ID_FOUND)):
-	EXISTS = 0
-
-	for line in ID_FILE:
-		if UNIQUE_ID in line:
-			EXISTS = 1
-
-	if(EXISTS):
-		UNIQUE_ID = genUniqueID()
-		ID_FILE.seek(0)
+while 1:
+	if not UNIQUE_ID in IDS:
+		IDS.append[UNIQUE_ID]
+		break
 	else:
-		UNIQUE_ID_FOUND = 1
+		UNIQUE_ID = genUniqueID
 
-ID_FILE.close()
-ID_FILE = open(".snap/ids.txt", "a")
-ID_FILE.write(UNIQUE_ID + "\n")
-ID_FILE.close()
-
-#Git sequence for commiting ids.txt file changes
-#os.system("git add .snap/ids.txt")
-os.system("git update-index --no-assume-unchanged .snap/ids.txt")
-os.system('git commit -am "Commiting ID file updates"')
+coll.update_one({"_id" : "57670c925bca6d0db8aee2a6"}, {"$set": {"ids": IDS}}, upsert=False)
 
 print "Your unique ID is " + UNIQUE_ID
 print "*****************\n"
@@ -98,10 +89,14 @@ else:
 
 	os.system("rm " + OLD_MANIFEST_NAME)
 
-#Add then commit everything to the git repository
-commit_message = '"Adding case ID ' + UNIQUE_ID + '"'
+with open (NEW_MANIFEST_NAME, "r") as myfile:
+	data=myfile.readlines()
 
-os.system("git add " + NEW_MANIFEST_NAME)
-os.system("git commit .snap/* -m " + commit_message)
-os.system("git push origin master")
-#Still having some issues commiting the ids.txt file in the script
+os.system("rm " + NEW_MANIFEST_NAME)
+
+db[i].insert_one(
+	{
+		'id' : UNIQUE_ID,
+		'package_list' : data
+	}
+)
