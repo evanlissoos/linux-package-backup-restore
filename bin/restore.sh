@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python python/apply.py
+python ../python/apply.py

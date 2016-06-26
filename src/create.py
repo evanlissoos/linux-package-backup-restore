@@ -2,6 +2,7 @@ import os
 import subprocess
 import string
 import random
+import base64
 from pymongo import MongoClient
 
 #Evan Lissoos
@@ -19,7 +20,7 @@ print "This program assumes that you already have Puppet and pymongo installed o
 print "If not, please exit the program and install the packages"
 
 #Mongo setup
-client = MongoClient('ec2-54-191-245-35.us-west-2.compute.amazonaws.com')
+client = MongoClient(base64.b64decode('ZWMyLTU0LTE5MS0yNDUtMzUudXMtd2VzdC0yLmNvbXB1dGUuYW1hem9uYXdzLmNvbQ=='))
 db = client.linux_back
 
 
