@@ -1,9 +1,9 @@
 # linux-package-backup-restore
 
-The purpose of this program is to generate a list of all installed packages. You will be given the option to maintain the current version of packages installed or not. If you choose to not maintain the current version, all packages installed on clients will be up to date.
+This program is a utility to backup and restore all installed Linux packages on a given machine.
 
-For personal use I reccomend creating your own Git repository with the files found here. This way you you will be able to commit the package lists generated and therefore be able to apply them using your repository.
+The dependencies for this program are pymongo and Puppet.
+	To install Puppet, use your system's package manager.
+	To install pymongo, use pip.
 
-To generate a package list, use the "create.py" Python script. This will give you a unique ID, make sure you keep note of this.
-
-To apply a package list to a client, use the "apply.py" Python script. This will take in a unique ID and apply all packages found in the list. If you see errors, do not worry that is normal. These are just system packages that are already installed or are not needed.
+To create a backup, run './backup' and you will be given a unique ID. To restore, call 'sudo ./restore' and enter in your ID.
