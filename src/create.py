@@ -1,8 +1,6 @@
-import os
 import subprocess
-import string
-import random
-import base64
+from random import choice
+from base64 import b64decode
 from pymongo import MongoClient
 
 #Evan Lissoos
@@ -11,7 +9,7 @@ from pymongo import MongoClient
 
 #Function to generate a random string of hex charachters as Unique ID
 def genUniqueID():
-   return ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
+   return ''.join([choice('0123456789ABCDEF') for x in range(6)])
 
 
 print "*****************"
@@ -20,41 +18,46 @@ print "This program assumes that you already have Puppet and pymongo installed o
 print "If not, please exit the program and install the packages"
 
 #Mongo setup
-client = MongoClient(base64.b64decode('ZWMyLTU0LTE5MS0yNDUtMzUudXMtd2VzdC0yLmNvbXB1dGUuYW1hem9uYXdzLmNvbQ=='))
+client = MongoClient(b64decode('ZWMyLTU0LTE5MS0yNDUtMzUudXMtd2VzdC0yLmNvbXB1dGUuYW1hem9uYXdzLmNvbQ=='))
 db = client.linux_back
 
 
 #Get user choice if they want to maintain current package versions, if not, packages will be up to date
-MAINTAIN_VERSIONS = 2
-while(MAINTAIN_VERSIONS == 2):
-	CHOICE = raw_input("For the package list to be kept, would you like to maintain the versions of packages currently installed? (y/n) ")
-	if(CHOICE == 'y' or CHOICE == 'Y'):
-		MAINTAIN_VERSIONS = 1
-	elif(CHOICE == 'n' or CHOICE == 'N'):
-		MAINTAIN_VERSIONS = 0
+maintain_versions = 2
+while(maintain_versions == 2):
+	choice = raw_input("For the package list to be kept, would you like to maintain the versions of packages currently installed? (y/n) ")
+	if(choice == 'y' or choice == 'Y'):
+		maintain_versions = 1
+	elif(choice == 'n' or choice == 'N'):
+		maintain_versions = 0
 	else:
-		MAINTAIN_VERSIONS = 2
+		maintain_versions = 2
 
 
 #Generate Unique ID then check if ID already exists. Push updates to Mongo
-UNIQUE_ID = genUniqueID()
-UNIQUE_ID_FOUND = 0
+unique_id = genUniqueID()
 cursor = db.ids.find()
-document = 0
+document = False
 for doc in cursor:
 	document = doc
-IDS = document.get('ids')
+
+if not document:
+	print "Error: could not communicate with server, aborting..."
+	print "*****************"
+	quit()
+
+ids = document.get('ids')
 
 while 1:
-	if not UNIQUE_ID in IDS:
-		IDS.append[UNIQUE_ID]
+	if not unique_id in ids:
+		ids.append[unique_id]
 		break
 	else:
-		UNIQUE_ID = genUniqueID
+		unique_id = genUniqueID
 
-coll.update_one({"_id" : "57670c925bca6d0db8aee2a6"}, {"$set": {"ids": IDS}}, upsert=False)
+coll.update_one({"_id" : "57670c925bca6d0db8aee2a6"}, {"$set": {"ids": ids}}, upsert=False)
 
-print "Your unique ID is " + UNIQUE_ID
+print "Your unique ID is " + unique_id
 print "*****************\n"
 
 
@@ -64,10 +67,11 @@ out = proc.communicate()[0].split('\n')
 
 
 #If user does not want to maintain versions, we must modify the manifest to indicate so
-if not MAINTAIN_VERSIONS:
-	ENSURE_STATEMENT = "	ensure => 'installed',\n"
+if not maintain_versions:
+	ENSURE_STATEMENT = "\tensure => 'installed',\n"
+	maintain = out
 	out = []
-	for line in split:
+	for line in maintain:
 		if "ensure" in line:
 			out.append(ENSURE_STATEMENT)
 		else:
@@ -77,7 +81,7 @@ if not MAINTAIN_VERSIONS:
 #Push new list to Mongo
 db.public.insert_one(
 	{
-		'id' : UNIQUE_ID,
+		'id' : unique_id,
 		'package_list' : out
 	}
 )
