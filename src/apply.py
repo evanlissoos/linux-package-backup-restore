@@ -1,7 +1,4 @@
-import os
 import subprocess
-import string
-from config import *
 from pymongo import MongoClient
 
 #Evan Lissoos
@@ -17,9 +14,9 @@ print "Also, please execute this program as root otherwise the execution will fa
 UNIQUE_ID = raw_input("Please enter your unique ID exactly as it appeared when the snapshot was created: ")
 
 #Mongo setup
-client = MongoClient(IP)
+client = MongoClient()
 db = client.linux_back
-cursor = db.public.find("id" : UNIQUE_ID)
+cursor = db.public.find({"id" : UNIQUE_ID})
 
 
 #Retrieve document from Mongo
@@ -30,22 +27,25 @@ for doc in cursor:
 
 #Error if couldn't find the document with the associated ID
 if not document:
-	print "Error: invalid ID"
+	print "Error: invalid ID, aborting..."
 	print "*****************"
+	quit()
 
 
 #Move the package list to a file then apply it with Puppet
-else:
-	print "*****************"
-	packages = document['package_list']
-	fileName = 'packages_'+UNIQUE_ID+'.pp'
-	for line in packages
-		with open(fileName, 'a') as pp:
-			pp.write(line+'\n')
+print "*****************"
 
-	proc = subprocess.Popen('puppet apply ' + fileName, shell=True, stdout=subprocess.PIPE)
+fileName = 'packages_'+UNIQUE_ID+'.pp'
 
-	if proc.communicate()[1] == 0:
-		print '\nPackage restore has successfully been completed'
+packages = document['package_list']
+packages.split
+for line in packages:
+	with open(fileName, 'a') as pp:
+		pp.write(line+'\n')
 
-	subprocess.Popen('puppet apply ' + fileName, shell=True, stdout=subprocess.PIPE)
+proc = subprocess.Popen('puppet apply ' + fileName, shell=True, stdout=subprocess.PIPE)
+
+if proc.communicate()[1] == 0:
+	print '\nPackage restore has successfully been completed'
+
+subprocess.Popen('puppet apply ' + fileName, shell=True, stdout=subprocess.PIPE)
