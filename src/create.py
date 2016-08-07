@@ -1,7 +1,7 @@
 import subprocess
 from random import choice
-from base64 import b64decode
 from pymongo import MongoClient
+from config import *
 
 #Evan Lissoos
 #6/19/16
@@ -18,7 +18,7 @@ print "This program assumes that you already have Puppet and pymongo installed o
 print "If not, please exit the program and install the packages"
 
 #Mongo setup
-client = MongoClient(b64decode('ZWMyLTU0LTE5MS0yNDUtMzUudXMtd2VzdC0yLmNvbXB1dGUuYW1hem9uYXdzLmNvbQ=='))
+client = MongoClient(IP)
 db = client.linux_back
 
 

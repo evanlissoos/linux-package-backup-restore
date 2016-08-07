@@ -1,5 +1,6 @@
 import subprocess
 from pymongo import MongoClient
+from config import *
 
 #Evan Lissoos
 #6/19/16
@@ -14,7 +15,7 @@ print "Also, please execute this program as root otherwise the execution will fa
 UNIQUE_ID = raw_input("Please enter your unique ID exactly as it appeared when the snapshot was created: ")
 
 #Mongo setup
-client = MongoClient()
+client = MongoClient(IP)
 db = client.linux_back
 cursor = db.public.find({"id" : UNIQUE_ID})
 
